@@ -62,7 +62,8 @@ namespace ShakeMaker.Controllers
 
         public ActionResult Logout()
         {
-            Session["tempUserName"] = null;
+            Session["tempUser"] = null;
+            Session["tempUserType"] = null;
             return RedirectToAction("Login");
         }
     }
