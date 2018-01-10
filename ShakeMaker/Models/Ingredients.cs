@@ -10,9 +10,9 @@ namespace ShakeMaker.Models
 
         public string name { get; set; }
 
-        public int amount { get; set; }
+        public string amount { get; set; }
 
-        public Ingredient(string ingName, int ingAmount)
+        public Ingredient(string ingName, string ingAmount)
         {
             name = ingName;
             amount = ingAmount;

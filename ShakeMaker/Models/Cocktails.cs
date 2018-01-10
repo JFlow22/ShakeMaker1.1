@@ -33,10 +33,5 @@ namespace ShakeMaker.Models
             videoLink = video;
         }
 
-        public void append(string ingr, int amount)
-        {
-            ing.Add(new Ingredient(ingr, amount));
-        }
-
     }
 }

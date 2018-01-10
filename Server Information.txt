@@ -1,0 +1,3 @@
+server name: shakerservice.database.windows.net
+user name: main
+password: shakermaker1!

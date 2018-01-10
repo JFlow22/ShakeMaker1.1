@@ -4,33 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ShakeMaker.Models;
+using ShakeMaker.Dal;
+using System.Diagnostics;
 
 namespace ShakeMaker.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Submit()
-        {
-            //for checking the login to the system...
-            //the user is called Yarden
-            regularUser regTempUser = new regularUser
-            {
-                userName = "Yarden",
-                userPassword = "1"
-            };
 
-            if (Request.Form["userName"] == regTempUser.userName)
-            {
-                Session["tempUser"] = regTempUser;
-                Session["tempUserType"] = regTempUser.getType();
-            }
-            else
-            {
-                Session["tempUser"] = null;
-                Session["tempUserType"] = null;
-            }
-            return RedirectToAction("Index", "Home");
-        }
         public ActionResult Index()
         {
             return View();
@@ -52,7 +33,7 @@ namespace ShakeMaker.Controllers
 
         public ActionResult Login()
         {
-            return View();
+            return View("~/Views/User/Login.cshtml");
         }
 
         public ActionResult regUserProfile()

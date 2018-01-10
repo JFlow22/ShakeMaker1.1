@@ -1,4 +1,4 @@
-﻿@model ShakeMaker.Models.superUser
+﻿@model ShakeMaker.Models.SuperUser
 
 @{
     ViewBag.Title = "Login";
@@ -7,7 +7,7 @@
 <div class="container">
     <h3 style="color:blue">Login</h3>
     <p>Login to see your favorite cocktails!</p>
-    <form action="Submit" method="post">
+    <form action="@Url.Action("Login","User")" method="post">
         <div class="form-group">
             <label for="userName">User Name:</label>
             <input class="form-control input-lg" id="usrNameInput" type="text" name="userName" />
@@ -16,6 +16,16 @@
             <label for="userPassword">Password:</label>
             <input class="form-control input-lg" id="usrPassInput" type="password" name="userPassword"/>
         </div>
+        <div>
+            <input id="regularUser" name="userType" type="radio" value="regularUser" checked />
+            <label for="regularUser">Regular User</label>
+            <br />
+            <input id="admin" name="userType" type="radio" value="admin" />
+            <label for="admin">Admin</label>
+        </div>
         <input type="submit" class="btn btn-info" value="Login" />
+        <div runat="server" id="errorMessage" style="color:red" visible="false">
+            Please fill all fields
+        </div>
     </form>
 </div>

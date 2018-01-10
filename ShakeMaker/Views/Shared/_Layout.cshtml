@@ -1,14 +1,14 @@
 ﻿@using ShakeMaker.Models;
 
 @{ 
-    regularUser regUsr = null;
+    RegularUser regUsr = null;
     Admin adminUsr = null;
 
     if (Session["tempUserType"] != null)
     {
         if ((string)Session["tempUserType"] == "regularUser")
         {
-            regUsr = Session["tempUser"] as regularUser;
+            regUsr = Session["tempUser"] as RegularUser;
         }
         else if ((string)Session["tempUserType"] == "adminUser")
         {
