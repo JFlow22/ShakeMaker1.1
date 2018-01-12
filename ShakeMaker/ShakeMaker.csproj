@@ -153,14 +153,12 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Dal\AdminDal.cs" />
     <Compile Include="Dal\CocktailDal.cs" />
-    <Compile Include="Dal\GetAdmins.cs" />
-    <Compile Include="Dal\GetCocktails.cs" />
-    <Compile Include="Dal\GetRegularUsers.cs" />
     <Compile Include="Dal\UserDal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="ModelBinders\SuperUserBinder.cs" />
+    <Compile Include="ModelBinders\UserDataBaseBinder.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Cocktails.cs" />
     <Compile Include="Models\Ingredients.cs" />

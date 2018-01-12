@@ -36,21 +36,21 @@ namespace ShakeMaker.Controllers
         bool checkLoginForm(SuperUser user)
         {
             if (user.userName=="") return false;
-            if (user.userPassword == "") return false;
+            if (user.password == "") return false;
             if (user.getType()=="RegularUser")
             {
-                GetRegularUsers get = new GetRegularUsers();
-                if (!get.locate((RegularUser)user))
+                UserDal dal = new UserDal();
+                if (!dal.locate((RegularUser)user))
                     return false;
-                else if (get.findUser(user.userName).userPassword != user.userPassword)
+                else if (dal.findUser(user.userName).password != user.password)
                     return false;
             }
             if (user.getType()=="Admin")
             {
-                GetAdmins get = new GetAdmins();
-                if (!get.locate((Admin)user))
+                AdminDal dal = new AdminDal();
+                if (!dal.locate((Admin)user))
                     return false;
-                else if (get.findAdmin(user.userName).userPassword != user.userPassword)
+                else if (dal.findUser(user.userName).password != user.password)
                     return false;
             }
             

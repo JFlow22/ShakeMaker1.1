@@ -15,7 +15,10 @@ namespace ShakeMaker.Models
         public Admin(string name, string pass)
         {
             userName = name;
-            userPassword = pass;
+            password = pass;
         }
+
+        public Admin() { }
+
     }
 }

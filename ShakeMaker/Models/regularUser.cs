@@ -22,9 +22,11 @@ namespace ShakeMaker.Models
         public RegularUser(string name, string pass, string emal="")
         {
             userName = name;
-            userPassword = pass;
+            password = pass;
             email = emal;
         }
+
+        public RegularUser() { }
 
         public List<Cocktails> favCocktails { get; set; }
 

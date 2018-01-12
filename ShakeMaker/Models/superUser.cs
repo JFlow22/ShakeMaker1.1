@@ -8,13 +8,14 @@ namespace ShakeMaker.Models
 {
     public abstract class SuperUser
     {
+        [Key]
         [Required]
         [StringLength(20,MinimumLength = 2)]
         public string userName { get; set; }
 
         [Required]
         [StringLength(20,MinimumLength = 4)]
-        public string userPassword { get; set; }
+        public string password { get; set; }
 
         public abstract string getType();
     }
