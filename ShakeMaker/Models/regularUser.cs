@@ -1,4 +1,5 @@
 ﻿using ShakeMaker.Dal;
+using ShakeMaker.ModelBinders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,8 +27,6 @@ namespace ShakeMaker.Models
             email = emal;
         }
 
-        public RegularUser() { }
-
         public List<Cocktails> favCocktails { get; set; }
 
         public string createCocktailString()
@@ -42,13 +41,19 @@ namespace ShakeMaker.Models
             return str;
         }
 
-        public void addFavCocktail(int cid)
+        public void addFavCocktail(Cocktails coc)
         {
-            GetCocktails cocktails = new GetCocktails();
-            Cocktails coc = cocktails.findCocktail(cid);
             favCocktails.Add(coc);
-            UserDal users = new UserDal();
-            
+        }
+
+        public UserDataBaseBinder toDB()
+        {
+            UserDataBaseBinder user = new UserDataBaseBinder();
+            user.userName = userName;
+            user.password = password;
+            user.email = email;
+            user.favouriteCocktails = createCocktailString();
+            return user;
         }
     }
 }

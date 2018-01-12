@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container">
+    <h3 style="color:blue">Register</h3>
+    <p>Create a new user!!</p>
+    <form action="@Url.Action("Register","User")" method="post">
+        <div class="form-group">
+            <label for="userName">User Name:</label>
+            <input class="form-control input-lg" id="usrNameInput" type="text" name="userName" />
+        </div>
+        <div class="form-group">
+            <label for="userPassword">Password:</label>
+            <input class="form-control input-lg" id="usrPassInput" type="password" name="userPassword" />
+        </div>
+        <div class="form-group">
+            <label for="userPasswordRetype">Retype Password:</label>
+            <input class="form-control input-lg" id="usrPassInputRetype" type="password" name="userPasswordRetype" />
+        </div>
+        <div class="form-group">
+            <label for="email">Enter Email:</label>
+            <input class="form-control input-lg" id="usrEmail" type="email" name="email" />
+        </div>
+        <input type="submit" class="btn btn-info" value="Login" />
+    </form>
+</div>

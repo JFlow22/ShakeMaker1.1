@@ -49,6 +49,7 @@
                         if (regUsr == null && adminUsr == null)
                         {
                             <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                            <li>@Html.ActionLink("Register", "Register", "Home")</li>
                             Session["tempUser"] = null;
                             Session["tempUserType"] = null;
                         }

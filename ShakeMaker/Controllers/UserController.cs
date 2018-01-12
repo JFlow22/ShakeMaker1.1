@@ -14,6 +14,11 @@ namespace ShakeMaker.Controllers
     public class UserController : Controller
     {
 
+        public ActionResult Register()
+        {
+            return RedirectToAction("index","Home");
+        }
+
         public ActionResult Login([ModelBinder(typeof(SuperUserBinder))] SuperUser user)
         {
 

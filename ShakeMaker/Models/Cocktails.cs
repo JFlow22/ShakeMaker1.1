@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShakeMaker.ModelBinders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -31,6 +32,35 @@ namespace ShakeMaker.Models
             cocktailCategory = cat;
             preperation = prep;
             videoLink = video;
+        }
+
+        public CocktailDataBaseBinder toDB()
+        {
+            CocktailDataBaseBinder coc = new CocktailDataBaseBinder();
+            coc.cid = cid;
+            coc.category = (int)cocktailCategory;
+            coc.preperation = preperation;
+            coc.video = videoLink;
+            return coc;
+        }
+
+        public List<IngredientDataBaseBinder> ingstoDB()
+        {
+            List<IngredientDataBaseBinder> ings = new List<IngredientDataBaseBinder>();
+            foreach (Ingredient ingredient in ing)
+            {
+                IngredientDataBaseBinder ingdb = new IngredientDataBaseBinder();
+                ingdb.cid = cid;
+                ingdb.ing = ingredient.name;
+                ingdb.amount = ingredient.amount;
+                ings.Add(ingdb);
+            }
+            return ings;
+        }
+
+        public void addIngredient(Ingredient ingredient)
+        {
+            ing.Add(ingredient);
         }
 
     }
