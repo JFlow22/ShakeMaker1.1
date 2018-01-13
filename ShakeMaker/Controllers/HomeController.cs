@@ -19,14 +19,14 @@ namespace ShakeMaker.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Find and make your favourite cocktails!!";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "dimabru@gmail.com";
 
             return View();
         }
@@ -42,6 +42,11 @@ namespace ShakeMaker.Controllers
         }
 
         public ActionResult regUserProfile()
+        {
+            return View();
+        }
+
+        public ActionResult adminProfile()
         {
             return View();
         }

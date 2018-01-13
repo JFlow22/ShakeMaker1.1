@@ -31,9 +31,12 @@ namespace ShakeMaker.ModelBinders
         {
             CocktailDal cocDal = new CocktailDal();
             List<Cocktails> cocktails = new List<Cocktails>();
-            foreach (string str in favouriteCocktails.Split(','))
+            if (favouriteCocktails != "")
             {
-                cocktails.Add(cocDal.findCocktail(Int32.Parse(str)));
+                foreach (string str in favouriteCocktails.Split(','))
+                {
+                    cocktails.Add(cocDal.findCocktail(Int32.Parse(str)));
+                }
             }
             return cocktails;
         }

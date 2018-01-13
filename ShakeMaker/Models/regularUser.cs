@@ -25,6 +25,12 @@ namespace ShakeMaker.Models
             userName = name;
             password = pass;
             email = emal;
+            favCocktails = new List<Cocktails>();
+        }
+
+        public RegularUser()
+        {
+            favCocktails = new List<Cocktails>();
         }
 
         public List<Cocktails> favCocktails { get; set; }

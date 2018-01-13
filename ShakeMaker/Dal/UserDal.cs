@@ -19,11 +19,36 @@ namespace ShakeMaker.Dal
             modelBuilder.Entity<UserDataBaseBinder>().ToTable("Users");
         }
 
+        public int getUserCount()
+        {
+            return users.Count<UserDataBaseBinder>();
+        }
+
+        public List<RegularUser> getAllUsers()
+        {
+            List<RegularUser> regs = new List<RegularUser>();
+            foreach (UserDataBaseBinder us in users)
+            {
+                regs.Add(us.getUser());
+            }
+            return regs;
+        }
+
         public bool locate(RegularUser user)
         {
             foreach (UserDataBaseBinder us in users)
             {
                 if (us.userName == user.userName)
+                    return true;
+            }
+            return false;
+        }
+
+        public bool locateEmail(string email)
+        {
+            foreach (UserDataBaseBinder us in users)
+            {
+                if (us.email == email)
                     return true;
             }
             return false;

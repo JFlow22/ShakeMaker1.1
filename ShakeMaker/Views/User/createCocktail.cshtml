@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "createCocktail";
+    List<ShakeMaker.Models.Ingredient> ingredients = new List<ShakeMaker.Models.Ingredient>();
+    Session["ingredients"] = ingredients;
+}
+
+<script language="javascript" type="text/javascript">
+    var tablerows = 0;
+
+    function clearIngredient()
+    {
+        a = document.getElementsByName("ingredientName");
+        b = document.getElementsByName("amount");
+        appendIngredient(a[0].value, b[0].value);
+        a[0].value = "";
+        b[0].value = "";
+    }
+
+    function appendIngredient(name, amount)
+    {
+        var table = document.getElementById("ingredientTable");
+        var tr = document.createElement("tr");
+        var td1 = document.createElement("td");
+        var td2 = document.createElement("td");
+        var tblname = document.createTextNode(name);
+        var tblamount = document.createTextNode(amount);
+        td1.appendChild(tblname);
+        td1.setAttribute("name", "name" + tablerows);
+        td2.appendChild(tblamount);
+        td2.setAttribute("name", "amount" + tablerows);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        table.appendChild(tr);
+
+        var inglist = document.getElementById("ingredientList");
+        var inputName = document.createElement("input");
+        inputName.value = name;
+        inputName.name = "name" + tablerows;
+        inputName.hidden = true;
+        var inputAmount = document.createElement("input");
+        inputAmount.value = amount;
+        inputAmount.name = "amount" + tablerows;
+        inputAmount.hidden = true;
+
+        inglist.appendChild(inputName);
+        inglist.appendChild(inputAmount);
+
+        tablerows += 1;
+    }
+
+    function removeTableData()
+    {
+        var table = document.getElementById("ingredientTable");
+        for (var i = table.rows.length; i > 1; i--)
+            table.deleteRow(i - 1);
+    }
+</script>
+
+<div class="container">
+    <h2>Create a new Cocktail!!</h2>
+    <form action="@Url.Action("createCocktail", "User")" method="post">
+        <div class="form-group">
+            <label for="cocktailName">Cocktail Name:</label>
+            <input class="form-control input-lg" id="cocktailName" type="text" name="cocktailName" />
+            <label for="category">Category:</label>
+            <select name="category">
+                <option value="classic">Classic</option>
+                <option value="holiday">Holiday</option>
+                <option value="spring">Spring</option>
+                <option value="frozenNblended">Frozen Cocktails and Blended Drinks</option>
+                <option value="hotAlcoholic">Hot Alcoholic</option>
+                <option value="tikiNtropical">Tiki Cocktail Recipes and Tropical Drinks</option>
+            </select>
+            <div class="form-group">
+                <h3>Ingredients</h3>
+                <label for="ingredientName">Ingredient Name:</label>
+                <input class="form-control input-lg" id="ingredientName" type="text" name="ingredientName" />
+                <label for="amount">Amount:</label>
+                <input class="form-control input-lg" id="amount" type="text" name="amount" />
+                <input id="addIngredient" type="button" value="Add Ingredient" name="addIngredient" onclick="clearIngredient()"/>
+            </div>
+            <label for="preperation">Describe preperation:</label>
+            <textarea cols="40" rows="5" class="form-control input-lg" id="preperation" type="text" name="preperation"></textarea>
+            <label for="video">Add YouTube link:</label>
+            <input class="form-control input-lg" id="video" type="text" name="video" />
+            <br />
+            <br />
+            <input type="hidden" id="ingredientList" name="ingredientList" />
+            <p>List of ingredients:</p>
+            <table runat="server" style="width:40%; text-align: center;" border="1" id="ingredientTable">
+                <tr>
+                    <th>Ingredient Name</th>
+                    <th>Amount</th>
+                </tr>
+            </table>
+        </div>
+        <input type="submit" class="btn btn-info" value="Submit" />
+        <input type="reset" class="btn btn-info" value="Cancel" onclick="removeTableData()" />
+    </form>
+</div>

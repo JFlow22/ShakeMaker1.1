@@ -25,13 +25,15 @@ namespace ShakeMaker.Models
 
         public string videoLink { get; set; }
 
-        public Cocktails(int id, List<Ingredient> ingredients, Category cat, string prep, string video)
+        public string name { get; set; }
+        public Cocktails(int id, List<Ingredient> ingredients, Category cat, string prep, string video, string n)
         {
             cid = id;
             ing = new List<Ingredient>(ingredients);
             cocktailCategory = cat;
             preperation = prep;
             videoLink = video;
+            name = n;
         }
 
         public CocktailDataBaseBinder toDB()
@@ -41,6 +43,7 @@ namespace ShakeMaker.Models
             coc.category = (int)cocktailCategory;
             coc.preperation = preperation;
             coc.video = videoLink;
+            coc.name = name;
             return coc;
         }
 

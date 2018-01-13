@@ -15,7 +15,7 @@ namespace ShakeMaker.Dal
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<IngredientDataBaseBinder>().ToTable("Cocktails");
+            modelBuilder.Entity<IngredientDataBaseBinder>().ToTable("Ingredients");
         }
 
         public List<Ingredient> findIngredients(int cid)
@@ -37,6 +37,16 @@ namespace ShakeMaker.Dal
             ingdb.cid = cid;
             ingredients.Add(ingdb);
             SaveChanges();
+        }
+
+        public bool locate(string ingredient, int cid)
+        {
+            foreach(IngredientDataBaseBinder ing in ingredients)
+            {
+                if (ing.ing == ingredient && ing.cid == cid)
+                    return true;
+            }
+            return false;
         }
     }
 }

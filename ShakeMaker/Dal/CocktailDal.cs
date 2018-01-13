@@ -21,7 +21,8 @@ namespace ShakeMaker.Dal
 
         public void addCocktail(Cocktails coc)
         {
-            cocktails.Add(coc.toDB());
+            CocktailDataBaseBinder cocktail = coc.toDB();
+            cocktails.Add(cocktail);
             SaveChanges();
         }
 
@@ -39,6 +40,16 @@ namespace ShakeMaker.Dal
                     return coc.getCocktail();
             }
             return null;
+        }
+
+        public bool locate(string name)
+        {
+            foreach(CocktailDataBaseBinder coc in cocktails)
+            {
+                if (coc.name == name)
+                    return true;
+            }
+            return false;
         }
     }
 }
