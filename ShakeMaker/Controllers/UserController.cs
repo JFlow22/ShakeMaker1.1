@@ -162,16 +162,10 @@ namespace ShakeMaker.Controllers
             return seconds;
         }
 
-        [HttpGet]
         public ActionResult getUserList()
         {
             UserDal dal = new UserDal();
-            List<RegularUser> users = new List<RegularUser>();
-            foreach (UserDataBaseBinder us in dal.users)
-            {
-                users.Add(us.getUser());
-            }
-            return Json(users, JsonRequestBehavior.AllowGet);
+            return Json(dal.users, JsonRequestBehavior.AllowGet);
         }
 
     }

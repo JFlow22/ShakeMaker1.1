@@ -1,0 +1,17 @@
+﻿<div class="container">
+   @{ 
+       ShakeMaker.Dal.CocktailDal coc = new ShakeMaker.Dal.CocktailDal();
+       List<ShakeMaker.Models.Cocktails> cocktails = new List<ShakeMaker.Models.Cocktails>();
+       foreach (ShakeMaker.ModelBinders.CocktailDataBaseBinder cocktail in coc.cocktails)
+       {
+           cocktails.Add(cocktail.getCocktail());
+       }
+       List<ShakeMaker.Models.CocktailName> names = new List<ShakeMaker.Models.CocktailName>();
+       foreach (ShakeMaker.ModelBinders.CocktailDataBaseBinder cocktail in coc.cocktails)
+       {
+           names.Add(new ShakeMaker.Models.CocktailName() { Cocktail_Name = cocktail.name});
+       }
+       WebGrid obj = new WebGrid(names);
+    }
+    @obj.GetHtml()
+</div>

@@ -52,5 +52,10 @@ namespace ShakeMaker.Controllers
             Session["tempUserType"] = null;
             return RedirectToAction("Login");
         }
+
+        public ActionResult CocktailInfo()
+        {
+            return View();
+        }
     }
 }

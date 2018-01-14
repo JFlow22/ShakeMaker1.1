@@ -29,7 +29,6 @@
     <p id="websiteSlogan">Making your party better</p>
 </div>
 
-
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
@@ -37,4 +36,14 @@
             Look for your favourite cocktails. Add them to your favourites and view videos of descriptions on how to make them!!
         </p>
     </div>
+</div>
+
+@Html.Partial("DisplayCocktails");
+
+<div>
+    <form action="@Url.Action("CocktailInfo", "Home")" method="post">
+        <label for="cocktailName">Enter cocktail name to view information:</label>
+        <input class="form-control input-lg" id="cocktailName" type="text" name="cocktailName" />
+        <input type="submit" class="btn btn-info" value="Submit" />
+    </form>
 </div>
