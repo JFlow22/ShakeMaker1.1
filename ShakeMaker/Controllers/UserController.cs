@@ -8,6 +8,7 @@ using ShakeMaker.Models;
 using ShakeMaker.ModelBinders;
 using System.Web.UI.HtmlControls;
 using System.Diagnostics;
+using System.Net.Mail;
 
 namespace ShakeMaker.Controllers
 {
@@ -16,19 +17,39 @@ namespace ShakeMaker.Controllers
 
         public ActionResult Register(RegularUser user)
         {
-            if (!checkRegisterForm(user))
-                return View("Register");
+            if (ModelState.IsValid)
+            {
+                ViewBag.Message = "";
+                if (!checkRegisterForm(user))
+                    return View("Register", user);
 
-            if (user.password != Request.Form["passwordRetype"])
-                return View("Register");
+                if (user.password != Request.Form["passwordRetype"])
+                {
+                    ViewBag.Message = "The passwords don't match";
+                    user.password = null;
+                    return View("Register", user);
+                }
 
-            Session["tempUser"] = user;
-            Session["tempUserType"] = "regularUser";
+                MailAddress mail = new MailAddress(user.email);
+                if (mail == null)
+                {
+                    user.password = null;
+                    return View("Register", user);
+                }
 
-            UserDal dal = new UserDal();
-            dal.addUser(user);
+                Session["tempUser"] = user;
+                Session["tempUserType"] = "regularUser";
 
-            return RedirectToAction("index","Home");
+                UserDal dal = new UserDal();
+                dal.addUser(user);
+
+                return RedirectToAction("index", "Home");
+            }
+            else
+            {
+                user.password = null;
+                return View("Register", user);
+            }
         }
 
         public ActionResult Login([ModelBinder(typeof(SuperUserBinder))] SuperUser user)

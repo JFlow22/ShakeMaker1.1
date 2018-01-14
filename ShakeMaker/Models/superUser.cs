@@ -10,11 +10,11 @@ namespace ShakeMaker.Models
     {
         [Key]
         [Required]
-        [StringLength(20,MinimumLength = 2)]
+        [StringLength(20, MinimumLength = 2, ErrorMessage = "User name must contain at least 2 characters and maximum of 20 characters")]
         public string userName { get; set; }
 
         [Required]
-        [StringLength(20,MinimumLength = 4)]
+        [StringLength(20, MinimumLength = 4, ErrorMessage = "Password must contain at least 4 characters and maximum of 20 characters")]
         public string password { get; set; }
 
         public abstract string getType();

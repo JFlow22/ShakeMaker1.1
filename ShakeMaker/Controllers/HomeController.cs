@@ -38,7 +38,7 @@ namespace ShakeMaker.Controllers
 
         public ActionResult Register()
         {
-            return View("~/Views/User/Register.cshtml");
+            return View("~/Views/User/Register.cshtml", new RegularUser());
         }
 
         public ActionResult regUserProfile()

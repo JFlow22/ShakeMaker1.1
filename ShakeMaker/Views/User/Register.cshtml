@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ShakeMaker.Models.RegularUser
+
+@{
     ViewBag.Title = "Register";
 }
 
@@ -8,11 +10,13 @@
     <form action="@Url.Action("Register","User")" method="post">
         <div class="form-group">
             <label for="userName">User Name:</label>
-            <input class="form-control input-lg" id="usrNameInput" type="text" name="userName" />
+            <input class="form-control input-lg" id="usrNameInput" type="text" name="userName" value="@Model.userName" />
+            <p style="color:red">@Html.ValidationMessageFor(x => x.userName)</p>
         </div>
         <div class="form-group">
             <label for="userPassword">Password:</label>
-            <input class="form-control input-lg" id="usrPassInput" type="password" name="password" />
+            <input class="form-control input-lg" id="usrPassInput" type="password" name="password" value="@Model.password" />
+            <p style="color:red">@Html.ValidationMessageFor(x => x.password)</p>
         </div>
         <div class="form-group">
             <label for="userPasswordRetype">Retype Password:</label>
@@ -20,7 +24,7 @@
         </div>
         <div class="form-group">
             <label for="email">Enter Email:</label>
-            <input class="form-control input-lg" id="usrEmail" type="email" name="email" />
+            <input class="form-control input-lg" id="usrEmail" type="email" name="email" value="@Model.email" />
         </div>
         <input type="submit" class="btn btn-info" value="Login" />
     </form>
