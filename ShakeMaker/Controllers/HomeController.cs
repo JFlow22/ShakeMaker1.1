@@ -46,11 +46,6 @@ namespace ShakeMaker.Controllers
             return View();
         }
 
-        public ActionResult adminProfile()
-        {
-            return View();
-        }
-
         public ActionResult Logout()
         {
             Session["tempUser"] = null;

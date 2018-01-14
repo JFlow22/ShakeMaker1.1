@@ -1,0 +1,53 @@
+﻿@model ShakeMaker.Models.Admin
+
+
+@{
+        ViewBag.Title = "Profile";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>adminProfile</title>
+</head>
+<body>
+    <div>
+        <h2>Admin private area</h2>
+    </div>
+    <div>
+        <table style="width:40%; text-align: center;" border="1" id="usertable">
+            <tr>
+                <th>User Name</th>
+                <th>Email</th>
+            </tr>
+        </table>
+
+        <script language="javascript">
+            $.get("getUserList", null, BindData);
+
+            function BindData(users)
+            {
+                var tbl = $("#usertable");
+
+                for (k = 0; k < users.length; k++)
+                {
+                    var newRow = "<tr>" +
+                        "<td>" + users[k].userName + "</td>" +
+                        "<td>" + users[k].email + "</td>" +
+                        "</tr>"
+                    tbl.append(newRow);
+                }
+            }
+        </script>
+
+    </div>
+    <br />
+    <br />
+    <div>
+        <input id="createCocktail" type="button" value="Create Cocktail" name="createCocktail" onclick="location.href='@Url.Action("createCocktailForm","User")'" />
+    </div>
+</body>
+</html>
