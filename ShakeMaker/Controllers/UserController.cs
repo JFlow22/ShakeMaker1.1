@@ -189,5 +189,10 @@ namespace ShakeMaker.Controllers
             return Json(dal.users, JsonRequestBehavior.AllowGet);
         }
 
+        public void addCocktailToFavourites(int cid, string userName)
+        {
+            UserDal dal = new UserDal();
+            dal.addFavCocktail(userName, cid);
+        }
     }
 }

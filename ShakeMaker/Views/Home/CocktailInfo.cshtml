@@ -1,2 +1,52 @@
 ﻿@model ShakeMaker.Models.Cocktails
+@using ShakeMaker.Models
 
+<script language="javascript">
+    function clicked()
+    {
+        var button = document.getElementById("addToFavourites");
+        button.hidden = true;
+        var added = document.createElement("p");
+        added.appendChild("Added to favourites");
+        button.appendChild(added);
+    }
+</script>
+
+<div>
+        <h2>Details of @Model.name</h2>
+        <br />
+        @{ 
+            if ((string)Session["tempUserType"] == "regularUser")
+            {
+                <input id="addToFavourites" type="button" value="Add To Favourites" name="addToFavourites" 
+                   @*onclick="location.href = @Url.Action("addCocktailToFavourites", "User", new { cid = Model.cid, userName = (Session["tempUser"] as RegularUser).userName }); clicked()"*@
+                       onclick="clicked()"/>
+            }
+        }
+        <p>Unique ID: @Model.cid</p>
+        <br />
+        <p>Category: @Model.cocktailCategory</p>
+        <br />
+        <p>List of Ingredients:</p>
+        <ul>
+        @{
+            foreach (ShakeMaker.Models.Ingredient ing in Model.ing)
+            {
+                <li>@ing.name - @ing.amount</li>
+            }
+        }
+        </ul>
+        <br />
+        <p>Preperation: @Model.preperation </p>
+        <br />
+        @{         
+            string video = Model.videoLink;
+            if (video != "")
+            {
+                string src = "https://www.youtube.com/embed/_";
+                src += video.Split('_').Last();
+                <iframe width="560" height="315" src="@src" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            }
+        }
+
+</div>

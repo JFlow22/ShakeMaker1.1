@@ -42,6 +42,16 @@ namespace ShakeMaker.Dal
             return null;
         }
 
+        public Cocktails findCocktail(string name)
+        {
+            foreach(CocktailDataBaseBinder coc in cocktails)
+            {
+                if (coc.name == name)
+                    return coc.getCocktail();
+            }
+            return null;
+        }
+
         public bool locate(string name)
         {
             foreach(CocktailDataBaseBinder coc in cocktails)

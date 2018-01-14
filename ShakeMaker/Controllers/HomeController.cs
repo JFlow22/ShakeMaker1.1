@@ -55,7 +55,11 @@ namespace ShakeMaker.Controllers
 
         public ActionResult CocktailInfo()
         {
-            return View();
+            string cocktailName = Request.Form["cocktailName"];
+            CocktailDal dal = new CocktailDal();
+            Cocktails coc = dal.findCocktail(cocktailName);
+            if (coc == null) return View("index");
+            return View(coc);
         }
     }
 }
