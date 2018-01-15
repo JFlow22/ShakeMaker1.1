@@ -63,10 +63,14 @@ namespace ShakeMaker.Controllers
             Session["tempUser"] = user;
 
             if (user.getType() == "RegularUser")
+            {
                 Session["tempUserType"] = "regularUser";
+            }
 
             else if (user.getType() == "Admin")
+            {
                 Session["tempUserType"] = "adminUser";
+            }
 
             return RedirectToAction("Index", "Home");
         }
@@ -87,6 +91,7 @@ namespace ShakeMaker.Controllers
 
         private bool checkLoginForm(SuperUser user)
         {
+            if (user == null) return false;
             if (user.userName=="") return false;
             if (user.password == "") return false;
             if (user.getType()=="RegularUser")
@@ -189,10 +194,11 @@ namespace ShakeMaker.Controllers
             return Json(dal.users, JsonRequestBehavior.AllowGet);
         }
 
-        public void addCocktailToFavourites(int cid, string userName)
+        public ActionResult addCocktailToFavourites(string userName, int cid)
         {
             UserDal dal = new UserDal();
             dal.addFavCocktail(userName, cid);
+            return View("~/Views/Home/Index.cshtml");
         }
     }
 }

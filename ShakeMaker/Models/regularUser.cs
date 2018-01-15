@@ -14,7 +14,7 @@ namespace ShakeMaker.Models
     {
 
         public string email { get; set; }
-
+        public List<Cocktails> favCocktails { get; set; }
         public override string getType()
         {
             return "RegularUser";
@@ -33,8 +33,6 @@ namespace ShakeMaker.Models
             favCocktails = new List<Cocktails>();
         }
 
-        public List<Cocktails> favCocktails { get; set; }
-
         public string createCocktailString()
         {
             string str = "";
@@ -43,7 +41,7 @@ namespace ShakeMaker.Models
                 str += coc.cid;
                 str += ',';
             }
-            str.TrimEnd(',');
+            str = str.Remove(str.Length - 1);
             return str;
         }
 
@@ -60,6 +58,16 @@ namespace ShakeMaker.Models
             user.email = email;
             user.favouriteCocktails = createCocktailString();
             return user;
+        }
+
+        public bool hasCocktail(Cocktails coc)
+        {
+            foreach(Cocktails cocktail in favCocktails)
+            {
+                if (cocktail.cid == coc.cid)
+                    return true;
+            }
+            return false;
         }
     }
 }

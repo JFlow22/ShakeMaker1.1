@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ShakeMaker.Models;
 using System.Diagnostics;
+using ShakeMaker.Dal;
 
 namespace ShakeMaker.ModelBinders
 {
@@ -21,9 +22,14 @@ namespace ShakeMaker.ModelBinders
 
             if (userType == "regularUser")
             {
-                user = new RegularUser(userName, password);
+                UserDal dal = new UserDal();
+                user = dal.findUser(userName);
             }
-            else user = new Admin(userName, password);
+            else
+            {
+                AdminDal dal = new AdminDal();
+                user = dal.findUser(userName);
+            }
 
             return user;
         }

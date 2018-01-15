@@ -1,28 +1,47 @@
 ﻿@model ShakeMaker.Models.Cocktails
 @using ShakeMaker.Models
+@using ShakeMaker.Dal
+
+@{
+    string user = "";
+    if ((string)Session["tempUserType"] == "regularUser")
+    {
+        user = (Session["tempUser"] as RegularUser).userName;
+    }
+}
 
 <script language="javascript">
+
     function clicked()
     {
         var button = document.getElementById("addToFavourites");
         button.hidden = true;
-        var added = document.createElement("p");
-        added.appendChild("Added to favourites");
-        button.appendChild(added);
+        var adding = document.getElementById("adding");
+        adding.hidden = false;
+        var toServer = document.getElementById("addServer");
+        toServer.click();
     }
 </script>
 
 <div>
-        <h2>Details of @Model.name</h2>
+        <h2 id="details">Details of @Model.name</h2>
         <br />
-        @{ 
+        @{
             if ((string)Session["tempUserType"] == "regularUser")
             {
-                <input id="addToFavourites" type="button" value="Add To Favourites" name="addToFavourites" 
-                   @*onclick="location.href = @Url.Action("addCocktailToFavourites", "User", new { cid = Model.cid, userName = (Session["tempUser"] as RegularUser).userName }); clicked()"*@
-                       onclick="clicked()"/>
+                RegularUser regUser = Session["tempUser"] as RegularUser;
+                if (regUser.hasCocktail(Model))
+                {
+                    <p id="added">Added to favourites</p>
+                }
+                else
+                {
+                    <input id="addToFavourites" type="button" value="Add To Favourites" name="addToFavourites" onclick="clicked()" />
+                    <input type="button" hidden id="addServer" onclick="location.href='@Url.Action("addCocktailToFavourites", "User", new { userName = user, cid = Model.cid })'" />
+                }
             }
         }
+        <p hidden id="adding">Adding to favourites</p>
         <p>Unique ID: @Model.cid</p>
         <br />
         <p>Category: @Model.cocktailCategory</p>

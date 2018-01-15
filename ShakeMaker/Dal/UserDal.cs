@@ -78,8 +78,9 @@ namespace ShakeMaker.Dal
             {
                 if (us.userName == userName)
                 {
-                    us.getUser().addFavCocktail(coc);
-                    us.favouriteCocktails = us.getUser().createCocktailString();
+                    RegularUser get = us.getUser();
+                    get.addFavCocktail(coc);
+                    us.favouriteCocktails = get.createCocktailString();
                 }
             }
             SaveChanges();
