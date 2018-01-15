@@ -1,18 +1,26 @@
 ﻿@model ShakeMaker.Models.RegularUser
+@using ShakeMaker.Models
 
 @{ 
     ViewBag.Title = "Profile";
 }
-<!DOCTYPE html>
 
-<html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>regUserProfile</title>
+    <title>@Model.userName</title>
 </head>
 <body>
     <div>
-        <h2>This is regUser!</h2>
+        <h1>List of Favourite Cocktails:</h1>
+        <ul>
+            @{ 
+                foreach (Cocktails cocktail in Model.favCocktails)
+                {
+                    <li>
+                        <a href="@Url.Action("FromUserToCocktailInfo","Home", new { cid=cocktail.cid })">@cocktail.name</a>
+                    </li>
+                }
+            }
+        </ul>
     </div>
 </body>
-</html>

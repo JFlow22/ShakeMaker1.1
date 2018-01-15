@@ -43,7 +43,7 @@ namespace ShakeMaker.Controllers
 
         public ActionResult regUserProfile()
         {
-            return View();
+            return View(Session["tempUser"] as RegularUser);
         }
 
         public ActionResult Logout()
@@ -51,6 +51,13 @@ namespace ShakeMaker.Controllers
             Session["tempUser"] = null;
             Session["tempUserType"] = null;
             return RedirectToAction("Login");
+        }
+
+        public ActionResult FromUserToCocktailInfo(int cid)
+        {
+            CocktailDal dal = new CocktailDal();
+            Cocktails coc = dal.findCocktail(cid);
+            return View("CocktailInfo", coc);
         }
 
         public ActionResult CocktailInfo()
