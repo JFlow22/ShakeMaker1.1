@@ -11,10 +11,15 @@ namespace ShakeMaker.Controllers
 {
     public class HomeController : Controller
     {
-
         public ActionResult Index()
         {
-            return View();
+            CocktailDal coc = new CocktailDal();
+            List<Cocktails> cocktails = new List<Cocktails>();
+            foreach (ModelBinders.CocktailDataBaseBinder cocktail in coc.cocktails)
+            {
+                cocktails.Add(cocktail.getCocktail());
+            }
+            return View(cocktails);
         }
 
         public ActionResult About()
@@ -65,7 +70,6 @@ namespace ShakeMaker.Controllers
             string cocktailName = Request.Form["cocktailName"];
             CocktailDal dal = new CocktailDal();
             Cocktails coc = dal.findCocktail(cocktailName);
-            if (coc == null) return View("index");
             return View(coc);
         }
     }

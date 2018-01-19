@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<ShakeMaker.Models.Cocktails>
+
+@{
     ViewBag.Title = "Home";
 }
 
@@ -23,6 +25,7 @@
 
 <link href="//fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css" />
 
+
 <div class="container">
     <img src="https://n6-img-fp.akamaized.net/free-vector/set-of-vector-illustration-stemware_1441-39.jpg?size=338&ext=jpg" id="logoPic" alt="Logo Picture" />
     <span id="websiteTitle">Shake Maker</span>
@@ -42,8 +45,17 @@
 
 <div>
     <form action="@Url.Action("CocktailInfo", "Home")" method="post">
-        <label for="cocktailName">Enter cocktail name to view information:</label>
-        <input class="form-control input-lg" id="cocktailName" type="text" name="cocktailName" />
+        <div class="form-group">
+            <label for="category">Choose a cocktail to view is information: </label>
+            <select class="form-control" name="cocktailName" id="cocktailName">
+                @foreach (var d in Model)
+                {
+                    <option value="@d.name">@d.name</option>
+                }
+            </select>
+        </div>
+        @*<input class="form-control input-lg" id="cocktailName" type="text" name="cocktailName" />*@
+        <br />
         <input type="submit" class="btn btn-info" value="Submit" />
     </form>
 </div> 

@@ -63,11 +63,11 @@
                 <ul class="nav navbar-nav">
                     @if (regUsr != null)
                     {
-                        <li>@Html.ActionLink("Private Area: " + regUsr.userName, "regUserProfile", "Home")</li>
+                        <li>@Html.ActionLink(regUsr.userName, "regUserProfile", "Home")</li>
                     }
                     else if (adminUsr != null)
                     {
-                        <li>@Html.ActionLink("Private Area: " + adminUsr.userName, "adminProfile", "User")</li>
+                        <li>@Html.ActionLink(adminUsr.userName, "adminProfile", "User")</li>
                     }
 
                 </ul>

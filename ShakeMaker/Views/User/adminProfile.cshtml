@@ -1,8 +1,17 @@
 ﻿@model ShakeMaker.Models.Admin
+@using ShakeMaker.Models
 
 
 @{
-        ViewBag.Title = "Profile";
+    ViewBag.Title = "Profile";
+    if (Session["tempUser"] == null)
+    {
+        HttpContext.Current.Response.Redirect("~/Home/Login");
+    }
+    if ((string)Session["tempUserType"] != "adminUser" && Session["tempUser"] != null)
+    {
+        HttpContext.Current.Response.Redirect("~/Home/Index");
+    }
 }
 
 <head>
@@ -43,6 +52,6 @@
     <br />
     <br />
     <div>
-        <input id="createCocktail" type="button" value="Create Cocktail" name="createCocktail" onclick="location.href='@Url.Action("createCocktailForm","User")'" />
+        <input id="createCocktail" class="btn btn-info" type="button" value="Create Cocktail" name="createCocktail" onclick="location.href='@Url.Action("createCocktailForm", "User", new Cocktails())'" />
     </div>
 </body>

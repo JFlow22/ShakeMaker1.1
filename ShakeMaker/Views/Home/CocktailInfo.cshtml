@@ -60,7 +60,7 @@
         <br />
         @{         
             string video = Model.videoLink;
-            if (video != "")
+            if (video != null && video != "")
             {
                 string src = "https://www.youtube.com/embed/_";
                 src += video.Split('_').Last();

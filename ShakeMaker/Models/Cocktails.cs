@@ -1,6 +1,7 @@
 ﻿using ShakeMaker.ModelBinders;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -26,6 +27,7 @@ namespace ShakeMaker.Models
         public string videoLink { get; set; }
 
         public string name { get; set; }
+
         public Cocktails(int id, List<Ingredient> ingredients, Category cat, string prep, string video, string n)
         {
             cid = id;
@@ -34,6 +36,10 @@ namespace ShakeMaker.Models
             preperation = prep;
             videoLink = video;
             name = n;
+        }
+
+        public Cocktails()
+        {
         }
 
         public CocktailDataBaseBinder toDB()

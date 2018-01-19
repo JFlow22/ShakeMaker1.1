@@ -20,8 +20,30 @@ namespace ShakeMaker.Controllers
             if (ModelState.IsValid)
             {
                 ViewBag.Message = "";
-                if (!checkRegisterForm(user))
+                ViewData["userNameError"] = "";
+                ViewData["emailError"] = "";
+                ViewData["missingInputError"] = "";
+
+                AdminDal adDal = new AdminDal();
+                Admin admin = new Admin(user.userName, user.password);
+                UserDal dal = new UserDal();
+                if (dal.locate(user) || adDal.locate(admin))
+                {
+                    ViewData["userNameError"] = "User name is already exist!";
                     return View("Register", user);
+                }
+
+                if (dal.locateEmail(user.email))
+                {
+                    ViewData["emailError"] = "E-mail is already exist!";
+                    return View("Register", user);
+                }
+
+                if (!checkRegisterForm(user))
+                {
+                    ViewData["missingInputError"] = "One of the inputs is missing!";
+                    return View("Register", user);
+                }
 
                 if (user.password != Request.Form["passwordRetype"])
                 {
@@ -40,8 +62,8 @@ namespace ShakeMaker.Controllers
                 Session["tempUser"] = user;
                 Session["tempUserType"] = "regularUser";
 
-                UserDal dal = new UserDal();
-                dal.addUser(user);
+                UserDal dalAdding = new UserDal();
+                dalAdding.addUser(user);
 
                 return RedirectToAction("index", "Home");
             }
@@ -54,38 +76,44 @@ namespace ShakeMaker.Controllers
 
         public ActionResult Login([ModelBinder(typeof(SuperUserBinder))] SuperUser user)
         {
-
-            if (!checkLoginForm(user))
+            Session["tempUser"] = null;
+            ViewData["inputError"] = "";
+            if (Request.Form["userName"] != "" && Request.Form["userPassword"] != "")
             {
+                if (user == null)
+                {
+                    ViewData["inputError"] = "User does not exist.";
+                    return View("Login");
+                }
+
+                if ((string)Request.Form["userPassword"] != user.password)
+                {
+                    ViewData["inputError"] = "Password is incorrect.";
+                    return View("Login");
+                }
+
+                Session["tempUser"] = user;
+
+                if (user.getType() == "RegularUser")
+                {
+                    Session["tempUserType"] = "regularUser";
+                }
+
+                else if (user.getType() == "Admin")
+                {
+                    Session["tempUserType"] = "adminUser";
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
                 return View("Login");
-            }
-
-            Session["tempUser"] = user;
-
-            if (user.getType() == "RegularUser")
-            {
-                Session["tempUserType"] = "regularUser";
-            }
-
-            else if (user.getType() == "Admin")
-            {
-                Session["tempUserType"] = "adminUser";
-            }
-
-            return RedirectToAction("Index", "Home");
         }
 
         private bool checkRegisterForm(RegularUser user)
         {
-            if (user.userName == "") return false;
             if (user.password == "") return false;
-            if (user.email == "") return false;
-            UserDal dal = new UserDal();
-            if (dal.locate(user)) return false;
-            if (dal.locateEmail(user.email)) return false;
-            AdminDal adDal = new AdminDal();
-            Admin admin = new Admin(user.userName, user.password);
-            if (adDal.locate(admin)) return false;
+            if (user.email == null) return false;
             return true;
         }
 
@@ -93,24 +121,7 @@ namespace ShakeMaker.Controllers
         {
             if (user == null) return false;
             if (user.userName=="") return false;
-            if (user.password == "") return false;
-            if (user.getType()=="RegularUser")
-            {
-                UserDal dal = new UserDal();
-                if (!dal.locate((RegularUser)user))
-                    return false;
-                else if (dal.findUser(user.userName).password != user.password)
-                    return false;
-            }
-            if (user.getType()=="Admin")
-            {
-                AdminDal dal = new AdminDal();
-                if (!dal.locate((Admin)user))
-                    return false;
-                else if (dal.findUser(user.userName).password != user.password)
-                    return false;
-            }
-            
+            if (user.password == "") return false;            
             return true;
         }
 
@@ -121,36 +132,65 @@ namespace ShakeMaker.Controllers
 
         public ActionResult createCocktailForm()
         {
-            return View("createCocktail");
+            return View("createCocktail", new Cocktails());
         }
 
         [HttpPost]
-        public ActionResult createCocktail()
+        public ActionResult createCocktail(Cocktails coc)
         {
-            string cocktailName = Request.Form["cocktailName"];
-            string category = Request.Form["category"];
-            string preperation = Request.Form["preperation"];
-            string video = Request.Form["video"];
-            List<Ingredient> ingredients = new List<Ingredient>();
-            for (int i=0; ; i++)
+            ViewData["missingPrepInput"] = "";
+            ViewData["missingIngInput"] = "";
+            ViewData["missingNameInput"] = "";
+            if (Request.Form["name"] != "" && Request.Form["preperation"] != "" && Request.Form["name0"] != null)
             {
-                if (Request.Form["name" + i.ToString()] == null)
-                    break;
-                string name = Request.Form["name" + i.ToString()];
-                string amount = Request.Form["amount" + i.ToString()];
-                ingredients.Add(new Ingredient(name, amount));
+                string cocktailName = Request.Form["name"];
+                string category = Request.Form["category"];
+                string preperation = Request.Form["preperation"];
+                string video = Request.Form["video"];
+
+                CocktailDal dal1 = new CocktailDal();
+                if (dal1.locate(cocktailName))
+                {
+                    ViewData["cocktailExistError"] = "Cocktail is already exist";
+                    return View("createCocktail", coc);
+                }
+
+                List<Ingredient> ingredients = new List<Ingredient>();
+                for (int i = 0; ; i++)
+                {
+                    if (Request.Form["name" + i.ToString()] == null)
+                        break;
+                    string name = Request.Form["name" + i.ToString()];
+                    string amount = Request.Form["amount" + i.ToString()];
+                    ingredients.Add(new Ingredient(name, amount));
+                }
+                int cid = generateUniqueId();
+                coc = new Cocktails(cid, ingredients, convertToCat(category), preperation, video, cocktailName);
+                if (!checkCocktailForm(coc))
+                {
+                    return View("createCocktail", coc);
+                }
+                CocktailDal dal = new CocktailDal();
+                dal.addCocktail(coc);
+                foreach (Ingredient ing in ingredients)
+                    dal.addIngredient(ing, cid);
+                ViewData["addedMessage"] = "Cocktail was inserted successfully! You can see it in homepage.";
+                return View("createCocktail", new Cocktails());
             }
-            int cid = generateUniqueId();
-            Cocktails coc = new Cocktails(cid, ingredients, convertToCat(category), preperation, video, cocktailName);
-            if (!checkCocktailForm(coc))
+            if (Request.Form["preperation"] == "")
             {
-                return View("~/Views/Home/index.cshtml");
+                ViewData["missingPrepInput"] = "Preperation was not inserted.";
             }
-            CocktailDal dal = new CocktailDal();
-            dal.addCocktail(coc);
-            foreach (Ingredient ing in ingredients)
-                dal.addIngredient(ing, cid);
-            return View();
+            if (Request.Form["name0"] == null)
+            {
+                ViewData["missingIngInput"] = "Ingredients was not inserted.";
+            }
+            if (Request.Form["name"] == "")
+            {
+                ViewData["missingNameInput"] = "Name was not inserted.";
+            }
+            return View("createCocktail", coc);
+
         }
 
         public Category convertToCat(string category)
@@ -166,10 +206,6 @@ namespace ShakeMaker.Controllers
 
         public bool checkCocktailForm(Cocktails cocktail)
         {
-            CocktailDal dal = new CocktailDal();
-            if (cocktail.name == "") return false;
-            if (cocktail.preperation == "") return false;
-            if (dal.locate(cocktail.name)) return false;
             IngredientDal ingdal = new IngredientDal();
             foreach (Ingredient ing in cocktail.ing)
             {

@@ -41,7 +41,8 @@ namespace ShakeMaker.Models
                 str += coc.cid;
                 str += ',';
             }
-            str = str.Remove(str.Length - 1);
+            if (str != "")
+                str = str.Remove(str.Length - 1);
             return str;
         }
 
