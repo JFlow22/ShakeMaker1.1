@@ -31,8 +31,6 @@ namespace ShakeMaker.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "dimabru@gmail.com";
-
             return View();
         }
 
