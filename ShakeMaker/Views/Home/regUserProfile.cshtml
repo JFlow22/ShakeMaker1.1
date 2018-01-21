@@ -5,22 +5,16 @@
     ViewBag.Title = "Profile";
 }
 
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@Model.userName</title>
-</head>
-<body>
-    <div>
-        <h1>List of Favourite Cocktails:</h1>
-        <ul>
-            @{ 
-                foreach (Cocktails cocktail in Model.favCocktails)
-                {
-                    <li>
-                        <a href="@Url.Action("FromUserToCocktailInfo","Home", new { cid=cocktail.cid })">@cocktail.name</a>
-                    </li>
-                }
+<div>
+    <h1>List of Favourite Cocktails:</h1>
+    <ul>
+        @{ 
+            foreach (Cocktails cocktail in Model.favCocktails)
+            {
+                <li>
+                    <a href="@Url.Action("FromUserToCocktailInfo","Home", new { cid=cocktail.cid })">@cocktail.name</a>
+                </li>
             }
-        </ul>
-    </div>
-</body>
+        }
+    </ul>
+</div>

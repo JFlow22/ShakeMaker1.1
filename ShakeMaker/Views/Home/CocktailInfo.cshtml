@@ -62,8 +62,8 @@
             string video = Model.videoLink;
             if (video != null && video != "")
             {
-                string src = "https://www.youtube.com/embed/_";
-                src += video.Split('_').Last();
+                string src = "https://www.youtube.com/embed/";
+                src += video.Split('=').Last();
                 <iframe width="560" height="315" src="@src" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             }
         }

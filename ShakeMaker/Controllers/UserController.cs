@@ -234,7 +234,11 @@ namespace ShakeMaker.Controllers
         {
             UserDal dal = new UserDal();
             dal.addFavCocktail(userName, cid);
-            return View("~/Views/Home/Index.cshtml");
+            RegularUser user = Session["tempUser"] as RegularUser;
+            CocktailDal coc = new CocktailDal();
+            Cocktails cocktail = coc.findCocktail(cid);
+            user.addFavCocktail(cocktail);
+            return View("~/Views/Home/CocktailInfo.cshtml",cocktail);
         }
     }
 }
