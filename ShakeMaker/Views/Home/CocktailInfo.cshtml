@@ -36,7 +36,7 @@
                 }
                 else
                 {
-                    <input id="addToFavourites" type="button" value="Add To Favourites" name="addToFavourites" onclick="clicked()" />
+                    <input class="btn btn-info" id="addToFavourites" type="button" value="Add To Favourites" name="addToFavourites" onclick="clicked()" />
                     <input type="button" hidden id="addServer" onclick="location.href='@Url.Action("addCocktailToFavourites", "User", new { userName = user, cid = Model.cid })'" />
                 }
             }

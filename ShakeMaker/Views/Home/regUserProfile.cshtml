@@ -3,18 +3,24 @@
 
 @{ 
     ViewBag.Title = "Profile";
+    if (Session["tempUser"] == null)
+    {
+        HttpContext.Current.Response.Redirect("~/Home/Login");
+    }
 }
 
 <div>
     <h1>List of Favourite Cocktails:</h1>
     <ul>
-        @{ 
-            foreach (Cocktails cocktail in Model.favCocktails)
+        @{  if (Model != null)
             {
+                foreach (Cocktails cocktail in Model.favCocktails)
+                {
                 <li>
-                    <a href="@Url.Action("FromUserToCocktailInfo","Home", new { cid=cocktail.cid })">@cocktail.name</a>
+                    <a href="@Url.Action("FromUserToCocktailInfo", "Home", new { cid = cocktail.cid })">@cocktail.name</a>
                 </li>
+                }
             }
-        }
-    </ul>
+            }
+</ul>
 </div>
