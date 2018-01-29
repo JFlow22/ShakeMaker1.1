@@ -14,7 +14,7 @@ namespace ShakeMaker.Controllers
 {
     public class UserController : Controller
     {
-
+        // Register a user to system
         public ActionResult Register(RegularUser user)
         {
             if (ModelState.IsValid)
@@ -74,6 +74,7 @@ namespace ShakeMaker.Controllers
             }
         }
 
+        // Login a user to the system
         public ActionResult Login([ModelBinder(typeof(SuperUserBinder))] SuperUser user)
         {
             Session["tempUser"] = null;
@@ -110,6 +111,7 @@ namespace ShakeMaker.Controllers
                 return View("Login");
         }
 
+        // Check validation of user credentials on register form
         private bool checkRegisterForm(RegularUser user)
         {
             if (user.password == "") return false;
@@ -117,6 +119,7 @@ namespace ShakeMaker.Controllers
             return true;
         }
 
+        // Check validation of user credentials on login form
         private bool checkLoginForm(SuperUser user)
         {
             if (user == null) return false;
@@ -125,16 +128,19 @@ namespace ShakeMaker.Controllers
             return true;
         }
 
+        // View admin personal page
         public ActionResult adminProfile()
         {
             return View();
         }
 
+        // View form cocktail creation
         public ActionResult createCocktailForm()
         {
             return View("createCocktail", new Cocktails());
         }
 
+        // Create a cocktail
         [HttpPost]
         public ActionResult createCocktail(Cocktails coc)
         {
@@ -193,6 +199,7 @@ namespace ShakeMaker.Controllers
 
         }
 
+        // Convert from string to enum
         public Category convertToCat(string category)
         {
             if (category == "classic") return Category.classic;
@@ -204,6 +211,7 @@ namespace ShakeMaker.Controllers
             return Category.classic;
         }
 
+        // Check validation of cocktail form
         public bool checkCocktailForm(Cocktails cocktail)
         {
             IngredientDal ingdal = new IngredientDal();
@@ -215,6 +223,7 @@ namespace ShakeMaker.Controllers
             return true;
         }
 
+        // Generate unique ID for cocktails
         public int generateUniqueId()
         {
             DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local);
@@ -224,12 +233,14 @@ namespace ShakeMaker.Controllers
             return seconds;
         }
 
+        // Retrieve user list
         public ActionResult getUserList()
         {
             UserDal dal = new UserDal();
             return Json(dal.users, JsonRequestBehavior.AllowGet);
         }
 
+        // Add cocktail to user's favourites
         public ActionResult addCocktailToFavourites(string userName, int cid)
         {
             UserDal dal = new UserDal();

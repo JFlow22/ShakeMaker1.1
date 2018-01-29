@@ -9,6 +9,7 @@ using ShakeMaker.ModelBinders;
 
 namespace ShakeMaker.Dal
 {
+    // Data Access Layer for users table
     public class UserDal : DbContext
     {
         public DbSet<UserDataBaseBinder> users { get; set; }

@@ -8,6 +8,7 @@ using System.Web;
 
 namespace ShakeMaker.Dal
 {
+    // Data Access Layer for ingredient table
     public class IngredientDal : DbContext
     {
         public DbSet<IngredientDataBaseBinder> ingredients { get; set; }

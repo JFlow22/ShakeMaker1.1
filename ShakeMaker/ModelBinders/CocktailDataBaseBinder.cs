@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace ShakeMaker.ModelBinders
 {
+    // Binder class for cocktails table
     public class CocktailDataBaseBinder
     {
         [Key]

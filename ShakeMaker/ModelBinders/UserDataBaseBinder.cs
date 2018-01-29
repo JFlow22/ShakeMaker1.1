@@ -9,6 +9,7 @@ using System.Web;
 
 namespace ShakeMaker.ModelBinders
 {
+    // Binder class for users table
     public class UserDataBaseBinder
     {
         [Key, Column (Order = 0)]

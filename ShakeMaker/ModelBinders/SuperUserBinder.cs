@@ -9,6 +9,7 @@ using ShakeMaker.Dal;
 
 namespace ShakeMaker.ModelBinders
 {
+    // Binder class for login form
     public class SuperUserBinder : IModelBinder
     {
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)

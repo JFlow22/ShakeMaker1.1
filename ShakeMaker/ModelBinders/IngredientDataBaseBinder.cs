@@ -8,6 +8,7 @@ using System.Web;
 
 namespace ShakeMaker.ModelBinders
 {
+    // Binder class for ingredients table
     public class IngredientDataBaseBinder
     {
         [Key ,Column (Order = 0)]

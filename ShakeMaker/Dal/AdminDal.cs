@@ -7,6 +7,7 @@ using System.Web;
 
 namespace ShakeMaker.Dal
 {
+    // Data Access Layer for admin table
     public class AdminDal : DbContext
     {
         public DbSet<Admin> admins { get; set; }
